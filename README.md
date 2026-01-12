@@ -1,8 +1,11 @@
 # 
         Representación de mujeres en publicaciones científicas
       
-
+# Code:
 https://observablehq.com/d/038d1256a8a2dbea@263
+
+# Visualization:
+https://observablehq.com/embed/038d1256a8a2dbea@263?cell=*
 
 View this notebook in your browser by running a web server in this folder. For
 example:
