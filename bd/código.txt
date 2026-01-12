@@ -1,0 +1,143 @@
+********************************************************************************
+**** Exhibits for Gender Disparities in the Attention to Cardiovascular Research 
+**** Lerchenmueller/ Schmallenbach/ Bley/ Lerchenmüller 2023 
+********************************************************************************
+
+
+*** Load file (Adapt working directory)
+use "Gender_disparities_AAS_cardio.dta" 
+
+  
+
+********************************************************************************
+****************** Figure 1 ****************************************************
+********************************************************************************
+
+*** Figure 1A - First Authors
+reg log_altmetric FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, replace ctitle(ASS) 
+
+reg log_news FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, append ctitle(News) 
+
+reg log_blogs FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, append ctitle(Blogs) 
+
+reg log_wiki FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, append ctitle(Wiki) 
+
+reg log_policy FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, append ctitle(Policy) 
+
+reg log_twitter_all FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, append ctitle(Twitter) 
+
+reg log_twitter_scientist FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, append ctitle(Twitter_Scientist) 
+
+reg log_twitter_commun FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, append ctitle(Twitter_Communi) 
+
+reg log_twitter_pract FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, append ctitle(Twitter_Pract) 
+
+reg log_twitter_public FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_regressions.xls, append ctitle(Twitter_Public) 
+
+
+*** Figure 1B - Last Authors
+reg log_altmetric LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, replace ctitle(ASS) 
+
+reg log_news LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, append ctitle(News) 
+
+reg log_blogs LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, append ctitle(Blogs) 
+
+reg log_wiki LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, append ctitle(Wiki) 
+
+reg log_policy LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, append ctitle(Policy) 
+
+reg log_twitter_all LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, append ctitle(Twitter) 
+
+reg log_twitter_scientist LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, append ctitle(Twitter_Scientist) 
+
+reg log_twitter_commun LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, append ctitle(Twitter_Communi) 
+
+reg log_twitter_pract LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, append ctitle(Twitter_Pract) 
+
+reg log_twitter_public LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_regressions.xls, append ctitle(Twitter_Public) 
+
+
+
+********************************************************************************
+****************** Figure 2 ****************************************************
+********************************************************************************
+
+
+*** Figure 2A - Citations
+
+* first authors
+reg log_cites FA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using FA_cites_regressions.xls, append ctitle(DV_Citations) 
+
+* last authors
+reg log_cites LA_female i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using LA_cites_regressions.xls, append ctitle(DV_Citations) 
+
+
+*** Figure 2B - Correlational conversion rate from AAS to citations
+
+* First authors 
+reg log_cites log_altmetric i.FA_female c.log_altmetric#i.FA_female  i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+margins FA_female, dydx(log_altmetric)
+margins FA_female, dydx(log_altmetric) pwcompare(effects)
+
+margins, at(log_altmetric=(0 1 2 3 4 4.5 5 6 7 8 9)) over(FA_female) post 
+estimates store FAmargins
+outreg2 FAmargins using FA_margins.xls
+
+
+
+* Last authors
+reg log_cites log_altmetric i.LA_female c.log_altmetric#i.LA_female  i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+margins LA_female, dydx(log_altmetric)
+margins LA_female, dydx(log_altmetric) pwcompare(effects)
+
+margins, at(log_altmetric=(0 1 2 3 4 5 6 7 8 9)) over(LA_female) 
+estimates store LAmargins
+outreg2 LAmargins using LA_margins.xls
+
+
+
+********************************************************************************
+****************** Figure 3 ****************************************************
+********************************************************************************
+
+*** Figure 3A - AAS and Gender Pairings
+reg log_altmetric i.gender_combo i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using gender_combo_AAS_regressions.xls, append ctitle(DV_Citations) 
+
+
+*** Figure 3B - Correlational Conversion Rate and Gender Pairings
+reg log_cites log_altmetric c.log_altmetric##i.gender_combo  i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+margins gender_combo, dydx(log_altmetric)
+margins gender_combo, dydx(log_altmetric) pwcompare(effects)
+
+margins, at(log_altmetric=(0 1 2 3 4 5 6 7 8 9)) over(gender_combo) post 
+estimates store gender_combo_margins
+outreg2 gender_combo_margins using gender_combo_margins.xls
+
+
+*** Figure 3C - Citations and Gender Pairings
+reg log_cites i.gender_combo i.journal_id i.publication_year#i.publication_month n_authors i_covid, robust
+outreg2 using gender_combo_cites_regressions.xls, append ctitle(DV_Citations) 
+

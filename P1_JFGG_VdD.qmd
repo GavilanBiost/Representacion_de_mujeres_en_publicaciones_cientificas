@@ -1,0 +1,130 @@
+---
+title: "Practica 1: Visualización de Datos"
+author: "Jesús F García Gavilán"
+date: ""
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Índice"
+    toc-location: left
+  pdf:
+    documentclass: article
+    geometry: [margin=2.5cm]
+number-sections: true
+---
+
+```{=html}
+<style>
+ul { list-style-type: square; }
+body { text-align: justify; }
+</style>
+```
+
+```{r Librerías, include=F}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(knitr)
+library(kableExtra)
+```
+
+
+# Justificación:
+
+Para esta práctica he elegido un conjunto de datos llamado: "Gender_disparities_AAS_cardio", disponible en el repositorio de [Harvard Dataverse](https://dataverse.harvard.edu/file.xhtml?fileId=7161806&datasetVersionId=346106). Esta elección tiene motivaciones profesionales y personales. En mi trabajo formo parte de en un grupo de investigación en enfermedades metabólicas y cardiovasculares, un ámbito al que se le asocia un sesgo de género tanto en la autoría científica como en la visibilidad de las investigadoras. El 75% del equipo son mujeres, incluida una investigadora principal, por lo que el tema me resulta especialmente interesante. 
+
+Al revisar repositorios abiertos encontré este dataset que permite analizar de forma rigurosa y basandose en datos públicos un debate actual en el ámbito académico: la desigual representación de mujeres en publicaciones científicas y su impacto en la difusión, el reconocimiento y la producción de conocimiento.
+
+Así mismo, ofrece un gran potencial para desarrollar visualizaciones interactivas centradas en perspectiva de género, una línea destacada en el temario de esta asignatura.
+
+# Relevancia del conjunto de datos:
+
+Este dataset es un recurso especialmente interesante para explorar preguntas relacionadas con la representación, la visibilidad y el impacto desde una perspectiva de género, conforme con las recomendaciones metodológicas de la visualización de datos inclusiva que indica el material de la asignatura (como por ejemplo, en la importancia de detectar sesgos o de la lectura crítica de los datos).
+
+Asímismo, considero que la pregunta que permite plantear y responder es especialmente relevante y de interés en en mi área laboral, ya que aborda una situación de actualidad muy discutida y que ha motivado cambios significativos el sistema de evaluación académica e investigadora a nivel nacional: ¿existe desigualdad de género en la ciencia? En mi caso, la pregunta sería más concreta: ¿ha existido en los últimos años desigualdades de género en las autorías científicas y en la visibilidad de las investigadoras en la investigación de enfermedades cardiovasculares? 
+
+En este sentido, el dataset tiene información relativamente reciente y, considerando que la producción científica responde a dinámicas prolongadas cuya evolución requiere tiempo para observarse el cambio, los resultados pueden considerarse facilmente extrapolables y relevantes al día de hoy.
+
+# Complejidad:
+
+```{r, warning=F}
+Gender_disparities_AAS_cardio = read_csv("bd/Gender_disparities_AAS_cardio.csv")
+```
+
+El dataset contiene un volumen y una diversidad tipológica de variables considerable. Hay 6678 registros y 20 variables que se pueden incrementar, lo que garantiza una base suficientemente amplia para identificar patrones robustos, realizar comparaciones significativas y explorar relaciones entre variables sin caer en problemas de muestreo. También me permitirá desarrollar distintas combinaciones de visualizaciones y explorar a distintos niveles de detalle la pregunta inicial: ¿Hay desigualdad?
+
+En cuanto a la naturaleza de los datos, el dataset combina datos categóricos (como el género de la autoría, combinaciones de género en los equipos, identificadores de revista, categorías temáticas), datos cuantitativos continuos (número de autores, métricas de impacto, indicadores altmétricos), datos discretos (año de publicación, indicadores binarios como la presencia o ausencia de COVID-19 como temática) y variables que pueden ser temporales, como el año y mes de publicación.
+
+```{r}
+colnames(Gender_disparities_AAS_cardio)
+```
+
+Esta riqueza tipológica me facilitará el uso de múltiples técnicas de visualización como gráficos básicos de barras, gráficos de dispersión, gráficos de series temporales... 
+
+# Originalidad:
+
+Este dataset me ofrecerá una buena oportunidad para presentar un proyecto original, relevante y poco explorado, que se diferencie tanto por la temática como por las posibilidades de extensión y transformación analítica.
+
+La elección del dataset se aleja de los datasets clásicos o ampliamente utilizados en trabajos de visualización (COVID-19, criminalidad, tráfico o datos meteorológicos) y su temática, centrada en desigualdades de género en la autoría y visibilidad científica dentro de la investigación de enfermedades cardiovasculares, es una área muy nicho poco explorada que ofrece un enfoque novedoso.
+
+Además, puede ampliarse con fuentes externas para contextualizar mejor los patrones observados, por ejemplo, incorporando datos bibliométricos adicionales de las revistas implicadas (factor de impacto, cuartiles, tasa de citación por campo) o datos sobre la representación de mujeres en cardiología a nivel de sociedades científicas, equipos clínicos o convocatorias de financiación competitiva (aunque son datos difíciles de conseguir).
+
+Por otro lado, también permite crear nuevas métricas derivadas que permitán reinterpretar los datos desde perspectivas no abordadas por el estudio original. Por ejemplo, se puede calcular la proporción ajustada de visibilidad por género, los índices normalizados de impacto en redes sociales, los ratios de liderazgo femenino por equipo o crear indicadores compuestos que integren autoría, citas y altmétricas. 
+
+Respecto a su uso previo, los resultados principales del dataset ya han sido publicados ([Lerchenmueller, M.J. et al](https://www.nature.com/articles/s42003-023-05058-9)). Sin embargo, no he encontrado visualizaciones avanzadas ni una difusión amplia de este dataset. Las representaciones disponibles se limitan a las figuras incluidas en el artículo científico del que procede, lo que deja espacio para desarrollar un proyecto visual nuevo, más interactivo, con mayor profundidad y metodológicamente actualizado. En este sentido, el trabajo propuesto constituye una evolución del análisis original, ya sea por ampliación del dataset con nuevas fuentes y métricas, o por el desarrollo de nuevas visualizaciones.
+
+# Cuestiones a responder con la visualización de los datos:
+
+Las cuestiones que me planteo son:
+
+  1.  ¿Existió desigualdad de género en la autoría científica en el ámbito cardiovascular entre 2015 y 2021?
+  2.  ¿Influye la composición de género del equipo en la visibilidad científica?
+  3.  ¿Hay diferencias sistemáticas en el impacto social y mediático según el género del primer/último autor?
+  4.  ¿Hay desigualdades según el número de autores, la revista o el año de publicación?
+
+Cada pregunta es adecuada para el tipo de datos disponibles y permite explotar tanto las variables categóricas como las cuantitativas, así como la dimensión temporal del dataset. También tengo en cuenta que estas cuestiones no han sido ampliamente exploradas en visualizaciones previas, más allá de las figuras descriptivas incluidas en la publicación original, por lo que la práctica supone una extensión y profundización visual innovadora.
+
+Con la primera pregunta buscaré visualizar la perspectiva de género con un análisis temporal, pudiendo ver cambios en tendencias y combinaciones de género en equipos de investigación. Con la segunda pregunta, buscaré relacionar el género y el rol de la autoría con las métricas contínuas. En la tercera pregunta integraré las variables de impacto mediático para construir metricas derivadas y crear visualizaciones multivariantes. Y con la cuarta pregunta, aplicaré un enfoque más multidimensional introduciendo simultáneamente varias capas de información para que interactúan entre sí, en este caso incluyendo el género, el número de autores, el contexto editorial por la revista y la tendencia temporal.
+
+Diccionario de variables del dataset:
+
+```{r Diccionario de variables, echo=FALSE, message=FALSE, warning=FALSE}
+
+# 1. Vector de etiquetas:
+etiquetas = c("Último autor es mujer (0/1)","Primer autor es mujer (0/1)",
+              "Mes de publicación", "Año de publicación",
+              "Indica si el artículo trata sobre COVID  (0/1)",
+              "Número total de autores", "Identificador de la revista",
+              "Altmetric score (log-transformado)", "Número de citas (log-transformado)",
+              "Menciones totales en Twitter", "Menciones por científicos",
+              "Menciones por comunicadores", "Menciones por público general",
+              "Menciones por profesionales", "Menciones en noticias",
+              "Presencia en documentos de política", "Menciones en Wikipedia",
+              "Presencia en blogs", "Combinación de géneros en la autoría")
+
+# 2. Diccionario:
+diccionario = Gender_disparities_AAS_cardio %>%
+  summarise(across(everything(), class)) %>%
+  pivot_longer(cols = everything(),
+               names_to = "variable",
+               values_to = "tipo") %>%
+  slice(1:(n() - 1)) %>%
+  mutate(significado = etiquetas,
+         rol = case_when(grepl("female|gender", variable) ~ "Dimensión (género)",
+                         grepl("publication", variable) ~ "Dimensión temporal",
+                         grepl("twitter|news|policy|wiki|blogs", variable) ~ 
+                           "Hecho (impacto social)",
+                         grepl("cites|altmetric", variable) ~ "Hecho (impacto académico)",
+                         TRUE ~ "Dimensión"))
+  
+# 3. Tabla
+diccionario %>%
+  dplyr::select(variable, tipo, significado, rol) %>%
+  kable(col.names = c("Variable", "Tipo de dato", "Significado", "Rol en el análisis"),
+        format = "latex",
+        booktabs = T) %>%
+  kable_styling(full_width = FALSE, latex_options = c("hold_position", "scale_down"))
+```
+

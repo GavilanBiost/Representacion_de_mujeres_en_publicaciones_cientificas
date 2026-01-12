@@ -1,0 +1,14 @@
+{
+  "name": "038d1256a8a2dbea",
+  "main": "038d1256a8a2dbea@263.js",
+  "version": "263.0.0",
+  "homepage": "https://observablehq.com/d/038d1256a8a2dbea",
+  "author": {
+    "name": "UOC",
+    "url": "https://observablehq.com/@uoc30"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}
